@@ -76,15 +76,14 @@ def Create_Host(array_name:str, host_name:str, protocol_type:str, endpoint_ids:l
   return results
 
 @mcp.tool()
-def Connect_Volume(array_name:str, host_group:bool=False,host_name:str="", volume_name:str="" ) -> str:
+def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str:
   """
-    Connect a given volume to a host on a specific Everpure FlashArray.
+    Connect a pre-created volume to a pre-created host on a specific Everpure FlashArray.
 
     Args:
-      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray.
-      host_name: The name of the host which was defined on the given Everpure FlashArray and will connect to the given volume. This is a optional parameter.
-      host_group: Set to True if the host_name refers to a host group name. Set to False if it's not. Default value is False.
-      volume_name: The name of the volume which was created before and will be connected to the given host or host group.
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. This is a required parameter.
+      host_name: The name of the host which was defined on the given Everpure FlashArray and will connect to the given volume. This is a required parameter.
+      volume_name: The name of the volume which was created before and will be connected to the given host or host group. This is a required parameter.
 
     Returns:
       Results of the job.
@@ -95,7 +94,7 @@ def Connect_Volume(array_name:str, host_group:bool=False,host_name:str="", volum
     return "ERROR: Array not found in config file. Please add it first!"
 
   current_client = fatools.Create_FA_Client(current_array)
-  results = fatools.Connect_One_Volume(current_client,host_group,host_name,volume_name)
+  results = fatools.Connect_Volume_To_Host(current_client,host_name,volume_name)
 
   return results
 
