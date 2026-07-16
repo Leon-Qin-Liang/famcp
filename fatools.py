@@ -20,7 +20,7 @@ def Create_One_Volume(fa_client:FAClient,volume_name:str,volume_size:int) -> str
     #create volume with given parameters.
     client_response = fa_client.post_volumes(vol_post,names=[volume_name],with_default_protection=False)
     if type(client_response) is responses.ErrorResponse:
-        return "ERROR:" + client_response.errors[0].message
+        return "ERROR:" + client_response.errors[0][message]
 
     return f"Volume {volume_name} created."
 
@@ -48,10 +48,10 @@ def Connect_One_Volume(fa_client:FAClient,host_name:str,host_group:bool,volume_n
     if host_group:
         client_response = fa_client.post_connections(host_group_names=[host_name],volume_names=[volume_name])
         if type(client_response) is responses.ErrorResponse:
-            return "ERROR:" + responses.errors[0].message
+            return "ERROR:" + responses.errors[0][message]
         return f"Volume {volume_name} has been connected to host group {host_name}."
     else:
         client_response = fa_client.post_connections(host_names=[host_name],volume_names=[volume_name])
         if type(client_response) is responses.ErrorResponse:
-            return "ERROR:" + responses.errors[0].message
+            return "ERROR:" + responses.errors[0][message]
         return f"Volume {volume_name} has been connected to host {host_name}."

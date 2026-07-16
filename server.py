@@ -76,7 +76,7 @@ def Create_Host(array_name:str, host_name:str, protocol_type:str, endpoint_ids:l
   return results
 
 @mcp.tool()
-def Connect_Volume(array_name:str, host_group_name:bool=False,host_name:str="", volume_name:str="" ) -> str:
+def Connect_Volume(array_name:str, host_group:bool=False,host_name:str="", volume_name:str="" ) -> str:
   """
     Connect a given volume to a host on a specific Everpure FlashArray.
 
