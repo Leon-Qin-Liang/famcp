@@ -27,14 +27,14 @@ def check_array_info(array_name:str) -> dict:
 
 #tool for crate a volume
 @mcp.tool()
-def Create_Volume(array_name:str, volume_name:str, volume_size:int) -> str:
+def Create_One_Volume(array_name:str, volume_name:str, volume_size:int) -> str:
   """
     Create a storage volume on a specific Everpure FlashArray.
 
     Args:
-      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray.
-      volume_name: The name of the volume.
-      volume_size: The size of the volume. The unit is GB.
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. REQUIRED.
+      volume_name: The name of the volume. REQUIRED.
+      volume_size: The size of the volume. The unit is GB. REQUIRED.
 
     Returns:
       Results of the job. 
@@ -50,15 +50,15 @@ def Create_Volume(array_name:str, volume_name:str, volume_size:int) -> str:
   return results
 
 @mcp.tool()
-def Create_Host(array_name:str, host_name:str, protocol_type:str, endpoint_ids:list[str], personality:str = "") -> str:
+def Create_One_Host(array_name:str, host_name:str, protocol_type:str, endpoint_ids:list[str], personality:str = "") -> str:
   """
     Create a host on a given Everpure FlashArray
 
     Args:
-      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray.
-      host_name: The name of the host to be created on the array.
-      protocol_type: The protocol to be used to connect host and the array. Should be one of fc/iscsi/nvme.
-      endpoint_ids: The protocol related IDs. WWN for fc, IQN for iscsi, NQN for nvme.
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. REQUIRED.
+      host_name: The name of the host to be created on the array. REQUIRED.
+      protocol_type: The protocol to be used to connect host and the array. Should be one of fc/iscsi/nvme. REQUIRED.
+      endpoint_ids: The protocol related IDs. WWN for fc, IQN for iscsi, NQN for nvme. REQUIRED.
       personality: Determines how the system tunes the array to ensure that it works optimally with the host. Set personality to the name of the host operating system or virtual memory system. Valid values are aix, esxi, hitachi-vsp, hpux, oracle-vm-server, solaris, vms, nutanix-mgmt and nutanix-cluster. If your system is not listed as one of the valid host personalities, do not set the option. By default, the personality is not set.
 
     Returns:
@@ -81,9 +81,9 @@ def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str
     Connect a pre-created volume to a pre-created host on a specific Everpure FlashArray.
 
     Args:
-      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. This is a required parameter.
-      host_name: The name of the host which was defined on the given Everpure FlashArray and will connect to the given volume. This is a required parameter.
-      volume_name: The name of the volume which was created before and will be connected to the given host or host group. This is a required parameter.
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. REQUIRED.
+      host_name: The name of the host which was defined on the given Everpure FlashArray and will connect to the given volume. REQUIRED.
+      volume_name: The name of the volume which was created before and will be connected to the given host or host group. REQUIRED.
 
     Returns:
       Results of the job.
