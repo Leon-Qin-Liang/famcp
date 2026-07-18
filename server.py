@@ -99,10 +99,10 @@ def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str
   return results
 
 @mcp.tool()
-def Create_Snapshot(array_name:str, volume_name:str="", snapshot_name:str="") -> str:
+def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str="") -> str:
   # under construction
   """
-    Create a snapshot from given storage volume on given Everpure FlashArray.
+    Create a snapshot from a given volume on given Everpure FlashArray.
 
     Args:
       array name: The IP address or FQDN of the management port of the specific Everpure FlashArray.
@@ -112,8 +112,12 @@ def Create_Snapshot(array_name:str, volume_name:str="", snapshot_name:str="") ->
     Returns:
       The results of the job.
   """
+  current_array = check_array_info(array_name)
+  if current_array["array_name"] == "":
+    return "ERROR: Array not found in config file. Please add it first!"
 
-  results = f"The snapshot {snapshot_name} has been created on {storage_name}."
+  current_client = fatools.Create_FA_Client(current_array)
+  results = fatools.Create_Volume_Snapshot(current_client,volume_name,snapshot_name)
 
   return results
 

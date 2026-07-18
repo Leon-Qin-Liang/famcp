@@ -25,7 +25,6 @@ def Create_One_Volume(fa_client:FAClient,volume_name:str,volume_size:int) -> str
     return f"Volume {volume_name} created."
 
 # Create a single host on given FlashArray
-
 def Create_One_Host(fa_client:FAClient, host_name:str, protocol_type:str, host_wwn:list[str], personality:str) -> str:
 
     if protocol_type == "fc":
@@ -50,3 +49,13 @@ def Connect_Volume_To_Host(fa_client:FAClient,host_name:str,volume_name:str) -> 
         return "ERROR:" + client_response.errors[0].message
     else:
         return f"Volume {volume_name} has been connected to host {host_name}."
+
+# Create a volume snapshot
+def Create_Volume_Snapshot(fa_client:FAClient,volume_name:str,snapshot_name:str) -> str:
+    volume_snapshot_post = flasharray.VolumeSnapshotPost(suffix=snapshot_name)
+
+    client_response = fa_client.post_volume_snapshots(volume_snapshot_post,source_names=[volume_name])
+    if type(client_response) is responses.ErrorResponse:
+        return "ERROR:" + client_response.errors[0].message
+    else:
+        return f"Snapshot {snapshot_name} from volume {volume_name} has been created."
