@@ -24,6 +24,29 @@ def check_array_info(array_name:str) -> dict:
   
   return current_array
 
+# tool for listing volume names
+@mcp.tool()
+def Get_Volumes(array_name:str, volume_name:str="") -> str:
+  """
+    List existing volumes on a given Everpure FlashArray.
+
+    Args:
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. REQUIRED.
+      volume_name: The name or partial name of the volumes to be list. Default value is "" means list all volumes on the FlashArray. 
+    
+    Returns:
+      List of names and creation time of the volumes(Latest first). 
+  """
+  current_array = check_array_info(array_name)
+  
+  if current_array["array_name"] == "":
+    return "ERROR: Array not found in config file. Please add it first!"
+
+  current_client = fatools.Create_FA_Client(current_array)
+  results = fatools.Create_One_Volume(current_client,volume_name)
+  
+  return results
+
 
 #tool for creating a volume
 @mcp.tool()
@@ -146,8 +169,6 @@ def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str
   results = fatools.Create_Volume_Snapshot(current_client,volume_name,snapshot_name)
 
   return results
-
-# tool for creating a host group
 
 if __name__ == "__main__":
   mcp.run(transport="streamable-http", host="0.0.0.0", port=8765)
