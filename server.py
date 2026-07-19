@@ -25,7 +25,7 @@ def check_array_info(array_name:str) -> dict:
   return current_array
 
 
-#tool for crate a volume
+#tool for creating a volume
 @mcp.tool()
 def Create_One_Volume(array_name:str, volume_name:str, volume_size:int) -> str:
   """
@@ -49,6 +49,7 @@ def Create_One_Volume(array_name:str, volume_name:str, volume_size:int) -> str:
   
   return results
 
+# tools for creating a host
 @mcp.tool()
 def Create_One_Host(array_name:str, host_name:str, protocol_type:str, endpoint_ids:list[str], personality:str = "") -> str:
   """
@@ -75,6 +76,31 @@ def Create_One_Host(array_name:str, host_name:str, protocol_type:str, endpoint_i
   
   return results
 
+# tool for creating a host group
+@mcp.tool()
+def Create_Host_Group(array_name:str, host_group_name:str) -> str:
+  """
+    Create a host group on a given Everpure FlashArray
+
+    Args:
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. REQUIRED.
+      host_group_name: The name of the host group to be created on the array. REQUIRED.
+
+    Returns:
+      Results of the job.
+  """
+
+  # Check if the given array name is in the configuration file
+  current_array = check_array_info(array_name)
+  if current_array["array_name"] == "":
+    return "ERROR: Array not found in config file. Please add it first!"
+
+  current_client = fatools.Create_FA_Client(current_array)
+  results = fatools.Create_Host_Group(current_client,host_group_name)
+  
+  return results
+
+# tool for connecting a volume to a host
 @mcp.tool()
 def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str:
   """
@@ -98,9 +124,9 @@ def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str
 
   return results
 
+# tool for creating a snapshot from a volume
 @mcp.tool()
 def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str="") -> str:
-  # under construction
   """
     Create a snapshot from a given volume on given Everpure FlashArray.
 
@@ -120,6 +146,8 @@ def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str
   results = fatools.Create_Volume_Snapshot(current_client,volume_name,snapshot_name)
 
   return results
+
+# tool for creating a host group
 
 if __name__ == "__main__":
   mcp.run(transport="streamable-http", host="0.0.0.0", port=8765)

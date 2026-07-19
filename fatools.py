@@ -42,6 +42,14 @@ def Create_One_Host(fa_client:FAClient, host_name:str, protocol_type:str, host_w
     
     return f"Host {host_name} created."
 
+# Create a host group
+def Create_Host_Group(fa_client:FAClient, host_group_name:str) -> str:
+    client_response = fa_client.post_host_groups(names=[host_group_name])
+    if type(client_response) is responses.ErrorResponse:
+        return "ERROR:" + client_response.errors[0].message
+    
+    return f"Host group {host_group_name} created."
+
 # Connect a volume to a host
 def Connect_Volume_To_Host(fa_client:FAClient,host_name:str,volume_name:str) -> str:
     client_response = fa_client.post_connections(host_names=[host_name],volume_names=[volume_name])
