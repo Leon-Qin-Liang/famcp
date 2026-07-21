@@ -1,10 +1,14 @@
-[
-    {
-        "array_name":"172.30.5.1",
-        "api_token":"0296fea8-2372-4575-4d1a-b4695a2ecfa6"
-    },
-    {
-        "array_name":"172.30.5.2",
-        "api_token":"0296fea8-2372-4575-4d1a-b4695a2ecfa6"
-    }
-]
+{
+    "array_info":
+        [
+            {
+                "array_name":"172.30.5.1",
+                "api_token":"0296fea8-2372-4575-4d1a-b4695a2ecfa6"
+            },
+            {
+                "array_name":"172.30.5.2",
+                "api_token":"0296fea8-2372-4575-4d1a-b4695a2ecfa6"
+            }
+        ]
+}
+

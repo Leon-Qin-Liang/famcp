@@ -6,18 +6,18 @@ mcp = FastMCP("famcp")
 
 #load array info which saved in a local JSON file named fainfo.json.
 with open("fainfo.json","r") as jfile:
-  array_info : list = json.load(jfile)
+  array_info : dict = json.load(jfile)
 
 print(array_info)
 
 #check if array infor is predefined in config file(fainfo.json).
-def check_array_info(array_name:str) -> dict:
+def Get_Array_Info(array_name:str) -> dict:
   current_array:dict = {
     "array_name":"",
     "api_token":""
   }
   
-  for i in array_info:
+  for i in array_info["array_info"]:
     if i["array_name"] == array_name:
       current_array["array_name"] = i["array_name"]
       current_array["api_token"] = i["api_token"]
@@ -37,7 +37,7 @@ def Get_Volumes(array_name:str, volume_name:str="") -> str:
     Returns:
       List of names and creation time of the volumes(Latest first). 
   """
-  current_array = check_array_info(array_name)
+  current_array = Get_Array_Info(array_name)
   
   if current_array["array_name"] == "":
     return "ERROR: Array not found in config file. Please add it first!"
@@ -62,7 +62,7 @@ def Create_One_Volume(array_name:str, volume_name:str, volume_size:int) -> str:
     Returns:
       Results of the job. 
   """
-  current_array = check_array_info(array_name)
+  current_array = Get_Array_Info(array_name)
   
   if current_array["array_name"] == "":
     return "ERROR: Array not found in config file. Please add it first!"
@@ -90,7 +90,7 @@ def Create_One_Host(array_name:str, host_name:str, protocol_type:str, endpoint_i
   """
 
   # Check if the given array name is in the configuration file
-  current_array = check_array_info(array_name)
+  current_array = Get_Array_Info(array_name)
   if current_array["array_name"] == "":
     return "ERROR: Array not found in config file. Please add it first!"
 
@@ -114,7 +114,7 @@ def Create_Host_Group(array_name:str, host_group_name:str) -> str:
   """
 
   # Check if the given array name is in the configuration file
-  current_array = check_array_info(array_name)
+  current_array = Get_Array_Info(array_name)
   if current_array["array_name"] == "":
     return "ERROR: Array not found in config file. Please add it first!"
 
@@ -138,7 +138,7 @@ def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str
       Results of the job.
   """
   # Check if the given array name is in the configuration file
-  current_array = check_array_info(array_name)
+  current_array = Get_Array_Info(array_name)
   if current_array["array_name"] == "":
     return "ERROR: Array not found in config file. Please add it first!"
 
@@ -161,7 +161,7 @@ def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str
     Returns:
       The results of the job.
   """
-  current_array = check_array_info(array_name)
+  current_array = Get_Array_Info(array_name)
   if current_array["array_name"] == "":
     return "ERROR: Array not found in config file. Please add it first!"
 
