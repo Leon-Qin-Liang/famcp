@@ -95,7 +95,7 @@ def Create_One_Host(array_name:str, host_name:str, protocol_type:str, endpoint_i
     return "ERROR: Array not found in config file. Please add it first!"
 
   current_client = fatools.Create_FA_Client(current_array)
-  results = fatools.Create_One_Host(current_client,host_name,protocol_type,endpoint_ids,personality)
+  results: str = fatools.Create_One_Host(current_client,host_name,protocol_type,endpoint_ids,personality)
   
   return results
 
@@ -119,7 +119,7 @@ def Create_Host_Group(array_name:str, host_group_name:str) -> str:
     return "ERROR: Array not found in config file. Please add it first!"
 
   current_client = fatools.Create_FA_Client(current_array)
-  results = fatools.Create_Host_Group(current_client,host_group_name)
+  results: str = fatools.Create_Host_Group(current_client,host_group_name)
   
   return results
 
@@ -143,7 +143,7 @@ def Connect_Volume_To_Host(array_name:str,host_name:str, volume_name:str) -> str
     return "ERROR: Array not found in config file. Please add it first!"
 
   current_client = fatools.Create_FA_Client(current_array)
-  results = fatools.Connect_Volume_To_Host(current_client,host_name,volume_name)
+  results: str = fatools.Connect_Volume_To_Host(current_client,host_name,volume_name)
 
   return results
 
@@ -166,7 +166,7 @@ def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str
     return "ERROR: Array not found in config file. Please add it first!"
 
   current_client = fatools.Create_FA_Client(current_array)
-  results = fatools.Create_Volume_Snapshot(current_client,volume_name,snapshot_name)
+  results: str = fatools.Create_Volume_Snapshot(current_client,volume_name,snapshot_name)
 
   return results
 
