@@ -21,10 +21,12 @@ This is a simple MCP server for operating Everpure FlashArray. This MCP server g
   ```bash
   uv venv --python 3.12.10
   ```
-
 - Install packages:
   ```bash
   uv add -r requirments.txt
   ```
-
+- Run the server:
+  ```bash
+  python server.py
+  ```
   
