@@ -7,7 +7,7 @@ This is a simple MCP server for operating Everpure FlashArray. This MCP server g
 ## Main Files
 
 - server.py
-  This is the main program file built using Fastmcp package.
+  This is the main program file built using Fastmcp.
 - fatools.py
   A Purity REST API wrapper. Built using py-pure-client.
 - fainfo.json
