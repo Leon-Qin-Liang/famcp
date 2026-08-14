@@ -50,6 +50,14 @@ def Create_Host_Group(fa_client:FAClient, host_group_name:str) -> str:
     
     return f"Host group {host_group_name} created."
 
+# Add host to host group
+def Add_Host_To_Host_Group(fa_client:FAClient, host_name:str, host_group_name:str) -> str:
+    client_response = fa_client.post_host_groups_hosts(group_names=[host_group_name], member_name=[host_name])
+    if type(client_response) is responses.ErrorResponse:
+        return "ERROR:" + client_response.errors[0].message
+    
+    return f"Host {host_name} has been added to host group {host_group_name}"
+
 # Connect a volume to a host
 def Connect_Volume_To_Host(fa_client:FAClient,host_name:str,volume_name:str) -> str:
     client_response = fa_client.post_connections(host_names=[host_name],volume_names=[volume_name])

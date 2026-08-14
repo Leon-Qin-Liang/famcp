@@ -119,9 +119,34 @@ def Create_Host_Group(array_name:str, host_group_name:str) -> str:
     return "ERROR: Array not found in config file. Please add it first!"
 
   current_client = fatools.Create_FA_Client(current_array)
-  results: str = fatools.Create_Host_Group(current_client,host_group_name)
+  results:str = fatools.Create_Host_Group(current_client,host_group_name)
   
   return results
+
+# tool for adding hosts into a given host group
+@mcp.tool()
+def Add_Host_To_Host_Group(array_name:str, host_name:str, host_group_name:str) -> str:
+  """
+    Add a host into a given host group on an Everpure FlashArray
+
+    args:
+      array_name: The IP address or FQDN of the management port of the specific Everpure FlashArray. REQUIRED.
+      host_name: The name of a host which will be added into a given host group. REQUIRED.
+      host_group_name: The name of the host group the host to be added to. REQUIRED.
+
+    Returns:
+      Results of the job.
+  """
+  # Check if the given array name is in the configuration file
+  current_array = Get_Array_Info(array_name)
+  if current_array["array_name"] == "":
+    return "ERROR: Array not found in config file. Please add it first!"
+
+  current_client = fatools.Create_FA_Client(current_array)
+  results:str = fatools.Add_Host_To_Host_Group(current_client, host_name, host_group_name)
+
+  return results
+
 
 # tool for connecting a volume to a host
 @mcp.tool()
