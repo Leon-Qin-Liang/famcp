@@ -4,11 +4,16 @@ import json
 
 mcp = FastMCP("famcp")
 
-#load array info which saved in a local JSON file named fainfo.json.
-with open("fainfo.json","r") as jfile:
-  array_info : dict = json.load(jfile)
+#load server configuration from local JSON file named serverconf.json.
+with open("serverconf.json", "r") as sconf:
+  server_conf:dict = json.load(sconf)
 
-print(array_info)
+server_ip:str = server_conf["server_ip"]
+server_port:int = server_conf["server_port"]
+
+#load array info which saved in a local JSON file named fainfo.json.
+with open("fainfo.json","r") as fainfo:
+  array_info : dict = json.load(fainfo)
 
 #check if array infor is predefined in config file(fainfo.json).
 def Get_Array_Info(array_name:str) -> dict:
@@ -196,4 +201,4 @@ def Create_Volume_Snapshot(array_name:str, volume_name:str="", snapshot_name:str
   return results
 
 if __name__ == "__main__":
-  mcp.run(transport="streamable-http", host="0.0.0.0", port=8765)
+  mcp.run(transport="streamable-http", host=server_ip, port=server_port)
