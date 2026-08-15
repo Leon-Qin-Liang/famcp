@@ -45,7 +45,7 @@ The information of Managed arrays, including management IP and token, are stored
 }
 ```
 The array_name should be IP address or FQDN of the management endpoint of the array.
-The api_token should be mapped to a array admin user who has enough privileges to operate the array.
+The api_token should be mapped to an array admin user who has enough privileges to operate the array.
 
 ### Start the server
 - Create venv:
