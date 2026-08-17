@@ -2,7 +2,7 @@ from pypureclient import flasharray
 from pypureclient import responses
 from pypureclient.flasharray import Client as FAClient
 
-#---------------------FA Tools Start-------------------------
+#---------------------FA Tools For Operating Start-------------------------
 
 # Create FlashArray Client
 def Create_FA_Client(array_info:dict) -> FAClient:
@@ -75,3 +75,16 @@ def Create_Volume_Snapshot(fa_client:FAClient,volume_name:str,snapshot_name:str)
         return "ERROR:" + client_response.errors[0].message
     else:
         return f"Snapshot {snapshot_name} from volume {volume_name} has been created."
+
+#---------------------FA Tools For Operating End-------------------------
+
+#---------------------FA Tools For Getting Information Start-------------------------
+
+# Get all volumes information of a given Everpure FlashArray
+def Get_Volumes(fa_client:FAClient) -> dict:
+    client_response:responses = fa_client.get_volumes()
+    if type(client_response) is responses.ErrorResponse:
+        return "ERROR:" + client_response.errors[0].message
+    else:
+        results = client_response.to_dict()
+        return results['items']
