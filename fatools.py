@@ -1,3 +1,4 @@
+import json
 from pypureclient import flasharray
 from pypureclient import responses
 from pypureclient.flasharray import Client as FAClient
@@ -78,13 +79,30 @@ def Create_Volume_Snapshot(fa_client:FAClient,volume_name:str,snapshot_name:str)
 
 #---------------------FA Tools For Operating End-------------------------
 
+
 #---------------------FA Tools For Getting Information Start-------------------------
 
 # Get all volumes information of a given Everpure FlashArray
-def Get_Volumes(fa_client:FAClient) -> dict:
+def Get_Volumes(fa_client:FAClient) -> json:
+    readable_result:list = []
+
     client_response:responses = fa_client.get_volumes()
     if type(client_response) is responses.ErrorResponse:
         return "ERROR:" + client_response.errors[0].message
     else:
         results = client_response.to_dict()
-        return results['items']
+        items:list = results["items"]
+        
+        for item in items:
+            current_dict:dict = {}
+            current_dict["name"] = item["name"]
+            current_dict["provisioned"] = item["provisioned"]
+            current_dict["qos"] = item["qos"]
+            current_dict["serial"] = item["serial"]
+            current_dict["data_reduction"] = item["space"]["data_reduction"]
+            current_dict["used_space"] = item["space"]["virtual"]
+            current_dict["pod"] = item["pod"]
+            current_dict["volume_group"] = item["volume_group"]
+            readable_result.append(current_dict)
+        
+        return json.dumps(readable_result)
