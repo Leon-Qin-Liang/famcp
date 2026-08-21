@@ -99,7 +99,7 @@ def Get_Volumes(fa_client:FAClient) -> json:
             current_dict["provisioned"] = item["provisioned"]
             current_dict["qos"] = item["qos"]
             current_dict["serial"] = item["serial"]
-            current_dict["data_reduction"] = item["space"]["data_reduction"]
+            current_dict["data_reduction"] = round(item["space"]["data_reduction"],2)
             current_dict["used_space"] = item["space"]["virtual"]
             current_dict["pod"] = item["pod"]
             current_dict["volume_group"] = item["volume_group"]
